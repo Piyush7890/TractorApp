@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<TextView
+    android:gravity="center"
+    android:id="@+id/login_title"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentTop="true"
+    android:layout_marginTop="32dp"
+    android:text="Login"
+    android:fontFamily="@font/google_sans"
+    android:textColor="?android:textColorPrimary"
+    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_below="@id/login_title"
+        android:id="@+id/username_container"
+        android:layout_marginTop="32dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputEditText
+            android:hint="Username"
+            android:inputType="textEmailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_below="@id/username_container"
+        android:layout_marginTop="32dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputEditText
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <RelativeLayout
+        android:layout_marginBottom="64dp"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <com.google.android.material.button.MaterialButton
+            android:textAllCaps="false"
+            android:id="@+id/create_account_btn"
+            android:layout_width="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_height="wrap_content"
+            android:text="Create account"
+            android:fontFamily="@font/google_sans"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            />
+        <com.google.android.material.button.MaterialButton
+            android:layout_gravity="end"
+            android:id="@+id/login_btn"
+            android:textAllCaps="false"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:fontFamily="@font/google_sans"
+            style="@style/Widget.MaterialComponents.Button"
+            />
+
+    </RelativeLayout>
+</RelativeLayout>
