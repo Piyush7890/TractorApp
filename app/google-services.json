@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "316609472859",
+    "firebase_url": "https://tractorapp-5d22a.firebaseio.com",
+    "project_id": "tractorapp-5d22a",
+    "storage_bucket": "tractorapp-5d22a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:316609472859:android:62a2defdf4d9622a",
+        "android_client_info": {
+          "package_name": "com.wce.tractorapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "316609472859-jclbtte66hte0jg6ktamdpo58ro7q6j8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wce.tractorapp",
+            "certificate_hash": "4f352f2625149a2fcf7404ff959e81f3b21868b7"
+          }
+        },
+        {
+          "client_id": "316609472859-o02bvs5svd0thc6p355l6bp7r1s1v3vh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCL9H0D0RacpkKb4tQrpa3_ARo-rLDU4sg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "316609472859-o02bvs5svd0thc6p355l6bp7r1s1v3vh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

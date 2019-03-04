@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+    android:icon="@drawable/ic_explore_black_24dp"
+    android:title="Explore"
+    android:id="@+id/action_explore" />
+    <item android:icon="@drawable/ic_my_ads"
+        android:title="My Ads"
+        android:id="@+id/action_my_ads"/>
+    <item android:icon="@drawable/ic_chat_black_24dp"
+        android:title="Chats"
+        android:id="@+id/action_chats"/>
+    <item android:icon="@drawable/ic_person_black_24dp"
+        android:title="Profile"
+        android:id="@+id/action_profile"/>
+
+</menu>
