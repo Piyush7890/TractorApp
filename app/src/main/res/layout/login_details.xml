@@ -21,6 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email_et"
                 android:hint="Email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -33,6 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password_et"
                 android:hint="Password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -44,6 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/confirm_password_et"
                 android:hint="Confirm Password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

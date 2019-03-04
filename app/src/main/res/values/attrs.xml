@@ -5,4 +5,13 @@
     </declare-styleable>
 
 
+    <declare-styleable name="MessageTipView">
+        <attr name="color" format="color"/>
+        <attr name="type" format="enum">
+            <enum name="left" value="0"/>
+            <enum name="right" value="1"/>
+            <enum name="box" value="2"/>
+        </attr>
+    </declare-styleable>
+
 </resources>

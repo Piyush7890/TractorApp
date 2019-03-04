@@ -2,8 +2,8 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
+<item name="android:statusBarColor">#ff808890</item>
+          <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
@@ -22,4 +22,34 @@
         <item name="android:background">?selectableItemBackground</item>
     </style>
 
+    <style name="ExpandButton">
+        <item name="android:fontFamily">@font/google_sans</item>
+        <item name="android:drawablePadding">8dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body1</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+    
+    <style name="BottomNavText" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="fontFamily">@font/google_sans</item>
+    </style>
+
+    <style name="SummaryText">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Subtitle2</item>
+        <item name="fontFamily">@font/google_sans</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:drawablePadding">12dp</item>
+        <item name="android:drawableTint">@android:color/white</item>
+    </style>
+
+    <style name="MessageTextAppearance">
+        <item name="android:padding">16dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:letterSpacing">0.0075</item>
+        <item name="android:lineSpacingMultiplier">1.1</item>
+    </style>
 </resources>

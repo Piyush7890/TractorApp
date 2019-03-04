@@ -2,12 +2,25 @@ package com.wce.tractorapp;
 
 import android.os.Bundle;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.wce.tractorapp.model.SignUpData;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
-public class LoginActivity extends AppCompatActivity  implements LoginFragment.OnFragmentInteractionListener{
-
+public class LoginActivity extends AppCompatActivity  implements LoginFragment.OnFragmentInteractionListener, SignUpFragment.onSignUp{
+    private FirebaseAuth mAuth;
+    private DatabaseReference databaseReference;
     ViewGroup parent;
 
     @Override
@@ -36,5 +49,25 @@ public class LoginActivity extends AppCompatActivity  implements LoginFragment.O
         if(getSupportFragmentManager().getBackStackEntryCount()==0)
         super.onBackPressed();
         else getSupportFragmentManager().popBackStack();
+    }
+
+    @Override
+    public void signUp(final SignUpData signUpData) {
+        FirebaseApp.initializeApp(this);
+        mAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        Task<AuthResult> authResultTask = mAuth.createUserWithEmailAndPassword(signUpData.getEmail(), signUpData.getPassword()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(LoginActivity.this,"Registered Successfully",Toast.LENGTH_SHORT).show();
+                    databaseReference = FirebaseDatabase.getInstance().getReference();
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    if(user!=null){
+                        databaseReference.child("UserInfo").child(user.getUid()).setValue(signUpData);
+                    }
+                }
+            }
+        });
     }
 }

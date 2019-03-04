@@ -10,7 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.wce.tractorapp.R;
+import com.wce.tractorapp.model.SignUpData;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -52,7 +55,7 @@ public abstract class CollapsibleCard extends LinearLayout {
     }
 
     abstract int getLayoutId();
-
+    public abstract SignUpData getDetails(SignUpData signUpData);
 
     public void toggle()
     {
@@ -63,9 +66,24 @@ public abstract class CollapsibleCard extends LinearLayout {
         container.setVisibility(expanded?VISIBLE:GONE);
     }
 
-    public void expand()
+    public boolean isAnyTextFieldEmpty()
     {
-
+        int flag = 0;
+        int size = container.getChildCount();
+        for(int i=0;i<size;i++)
+        {
+            if(container.getChildAt(i) instanceof TextInputLayout)
+            {
+                TextInputLayout textInputLayout = (TextInputLayout)container.getChildAt(i);
+                TextInputEditText textInputEditText = ((TextInputEditText) textInputLayout.getChildAt(0));
+                if(textInputEditText.getText().toString().isEmpty())
+                {
+                    flag = 1;
+                    textInputLayout.setError("Please fill the field");
+                }
+            }
+        }
+       return flag == 1;
     }
 
 }

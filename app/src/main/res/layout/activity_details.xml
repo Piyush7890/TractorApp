@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    android:background="#fff"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.google.android.material.appbar.AppBarLayout
+        android:orientation="vertical"
+        android:stateListAnimator="@null"
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            app:contentScrim="#ff808890"
+            android:layout_width="match_parent"
+            app:titleEnabled="false"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            android:layout_height="wrap_content">
+            <ImageView
+                app:layout_collapseMode="parallax"
+                android:src="@drawable/tractor"
+                android:scaleType="centerCrop"
+                android:layout_width="match_parent"
+                android:layout_height="196dp" />
+<androidx.appcompat.widget.Toolbar
+    app:title=" "
+    android:theme="@style/ThemeOverlay.MaterialComponents.Dark"
+    app:layout_collapseMode="pin"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?actionBarSize"/>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+<androidx.core.widget.NestedScrollView
+    android:id="@+id/nested_scroll_view"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/details_container"
+
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:background="#ff585858"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="32dp"
+            android:paddingBottom="16dp"
+            android:orientation="vertical"
+            android:id="@+id/summary_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="Equipment"
+                android:drawableStart="@drawable/ic_info_black_24dp"
+                style="@style/SummaryText" />
+            <TextView
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="Mumbai"
+            android:drawableStart="@drawable/ic_location_on_black_24dp"
+           style="@style/SummaryText" />
+
+            <TextView
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="300 per month"
+                android:drawableStart="@drawable/rupee_24dp"
+                style="@style/SummaryText" />
+
+        </LinearLayout>
+
+        <TextView
+            android:textColor="#202020"
+            android:background="#f5f5f5"
+            android:padding="16dp"
+            android:ellipsize="end"
+
+            android:fontFamily="@font/google_sans"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            android:text="4 Year Old tractor for sale"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:letterSpacing="0.005"
+            android:lineSpacingMultiplier="1.2"
+            android:textColor="?android:textColorSecondary"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+            android:padding="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
+    <iammert.com.view.scalinglib.ScalingLayout
+        android:id="@+id/expand_btn"
+        app:radiusFactor="1"
+        app:layout_behavior="iammert.com.view.scalinglib.ScalingLayoutBehavior"
+        android:elevation="2dp"
+        android:background="@color/expand_btn_bg"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+
+        android:layout_width="match_parent"
+        android:layout_height="52dp">
+        <include layout="@layout/expand_button"/>
+    </iammert.com.view.scalinglib.ScalingLayout>
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

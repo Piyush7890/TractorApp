@@ -19,6 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/address_et"
             android:hint="Address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -31,6 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/state_et"
             android:hint="State"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -43,6 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/city_et"
                 android:hint="City"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

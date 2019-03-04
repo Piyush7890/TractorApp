@@ -21,6 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/name_et"
                 android:hint="Name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -32,6 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/contact_et"
                 android:hint="Contact No."
                 android:inputType="number"
                 android:layout_width="match_parent"
@@ -44,6 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/adhaar_et"
                 android:hint="Adhaar No."
                 android:inputType="number"
                 android:layout_width="match_parent"

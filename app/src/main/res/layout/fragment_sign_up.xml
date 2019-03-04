@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+<ScrollView
+    android:layout_above="@id/btn_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
 <LinearLayout android:padding="16dp"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -6,17 +15,77 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginFragment">
-
+<TextView
+    android:fontFamily="@font/google_sans"
+    android:layout_marginTop="32dp"
+    android:layout_marginBottom="8dp"
+    android:gravity="center"
+    android:text="Sign Up"
+    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+    android:textColor="?android:textColorPrimary"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+    <TextView
+        android:textColor="?android:textColorSecondary"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+        android:layout_gravity="center_horizontal"
+        android:text="Please fill the details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
     <com.wce.tractorapp.widget.CollapsibleLoginCard
+        android:id="@+id/login_details"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <com.wce.tractorapp.widget.CollapsiblePersonalCard
+        android:id="@+id/personal_details"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <com.wce.tractorapp.widget.CollapsibleAddressCard
+        android:id="@+id/address_details"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+
+
 </LinearLayout>
+
+</ScrollView>
+    <LinearLayout
+        android:clipToPadding="false"
+        android:paddingEnd="16dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingStart="16dp"
+        android:id="@+id/btn_container"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/white"
+        android:elevation="8dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.button.MaterialButton
+            android:text="Login"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:id="@+id/back_btn"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Space
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/signup_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign Up"
+            android:textAllCaps="false"
+            android:layout_gravity="center_vertical"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            />
+    </LinearLayout>
+</RelativeLayout>

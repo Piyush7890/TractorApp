@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    android:background="#ffffff"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ConversationActivity">
+    <com.google.android.material.appbar.AppBarLayout
+        android:background="@null"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.Toolbar
+            app:contentInsetStartWithNavigation="0dp"
+            android:contentInsetLeft="0dp"
+            android:contentInsetStart="0dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            android:contentInsetRight="0dp"
+            android:contentInsetEnd="0dp"
+            app:contentInsetRight="0dp"
+            app:contentInsetEnd="0dp"
+            android:id="@+id/toolbar"
+            android:elevation="4dp"
+            android:background="@android:color/white"
+            android:layout_width="match_parent"
+            app:title="Piyush"
+            android:layout_height="?actionBarSize">
+
+
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+    <LinearLayout
+        android:paddingTop="16dp"
+        android:clipToPadding="false"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <include layout="@layout/left_chat_bubble"/>
+    <include layout="@layout/right_chat_bubble"/>
+        <include layout="@layout/left_chat_bubble"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_gravity="bottom"
+        android:padding="8dp"
+        android:clipToPadding="false"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageButton
+            android:onClick="getSpeechInput"
+            android:layout_gravity="bottom"
+            android:foregroundTint="#000000"
+            android:foreground="@drawable/ripple_mic"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_ccc"
+            android:background="@drawable/send_btn_bg"
+            android:backgroundTint="@android:color/white"
+            android:elevation="2dp"/>
+        <FrameLayout
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:elevation="1dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/msg_edit_text_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/compose_edit_text"
+                android:maxLines="4"
+                android:background="@null"
+                android:hint="Enter message ...."
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </FrameLayout>
+        <ImageButton
+            android:layout_gravity="bottom"
+            android:foreground="@drawable/send_btn_ripple"
+            android:elevation="2dp"
+            android:src="@drawable/ic_send_black_24dp"
+            android:backgroundTint="#1a73e8"
+            android:background="@drawable/send_btn_bg"
+            android:layout_width="48dp"
+            android:layout_height="48dp" />
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
