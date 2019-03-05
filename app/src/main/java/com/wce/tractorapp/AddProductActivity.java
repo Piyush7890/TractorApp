@@ -10,12 +10,12 @@ import android.widget.Spinner;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.google.android.material.appbar.AppBarLayout;
 import com.wce.tractorapp.ItemAnimators.PopItemAnimator;
 import com.wce.tractorapp.widget.FABAnimation.FABBehaviour;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,7 +25,7 @@ public class AddProductActivity extends AppCompatActivity implements PhotosAdapt
     RecyclerView photos;
     PhotosAdapter adapter;
     ImageView scrimImage;
-    NestedScrollView nestedScrollView;
+    AppBarLayout nestedScrollView;
     private boolean first= true;
 
     @Override
@@ -35,8 +35,8 @@ public class AddProductActivity extends AppCompatActivity implements PhotosAdapt
         Fade transition = new Fade();
         getWindow().setEnterTransition(transition);
         scrimImage = findViewById(R.id.scrim_image);
-        nestedScrollView = findViewById(R.id.nested_scroll_view);
-        nestedScrollView.setOnScrollChangeListener(new FABBehaviour(findViewById(R.id.fab)));
+        nestedScrollView = findViewById(R.id.appbar);
+        nestedScrollView.addOnOffsetChangedListener(new FABBehaviour(findViewById(R.id.fab)));
         photos = findViewById(R.id.photos_rv);
         photos.setItemAnimator(PopItemAnimator.create());
         adapter = new PhotosAdapter(this);
