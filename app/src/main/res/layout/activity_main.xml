@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".main.MainActivity">
     <FrameLayout
-        android:id="@+id/container"
+        android:layout_above="@id/bottom_nav_bar"
+            android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-<LinearLayout
-    android:layout_gravity="bottom"
-android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+
     <View
+        android:id="@+id/bottom_nav_shadow"
+        android:layout_above="@id/bottom_nav_bar"
         android:layout_width="match_parent"
         android:layout_height="8dp"
         android:background="@drawable/bottom_bar_shadow"/>
@@ -23,11 +23,11 @@ android:orientation="vertical"
         app:itemTextAppearanceActive="@style/BottomNavText"
         app:itemTextAppearanceInactive="@style/BottomNavText"
         android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
         android:id="@+id/bottom_nav_bar"
         android:layout_height="wrap_content"
         app:labelVisibilityMode="labeled"
         app:itemHorizontalTranslationEnabled="true"
         app:menu="@menu/bottom_nav_menu"/>
-</LinearLayout>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</RelativeLayout>

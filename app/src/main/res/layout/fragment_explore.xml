@@ -3,14 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_green_dark"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/white"
 
     tools:context=".main.ExploreFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        app:fabSize="normal"
+        app:borderWidth="0dp"
+        android:src="@drawable/ic_add_black_24dp"
+        android:tint="@android:color/black"
+       android:backgroundTint="@android:color/white"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        app:elevation="8dp"
+        android:id="@+id/add_event_btn"
+        android:layout_height="wrap_content" />
 
 </FrameLayout>

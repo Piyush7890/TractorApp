@@ -3,7 +3,10 @@ package com.wce.tractorapp;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.transition.Fade;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
@@ -11,6 +14,7 @@ import com.wce.tractorapp.ItemAnimators.PopItemAnimator;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,18 +24,37 @@ public class AddProductActivity extends AppCompatActivity implements PhotosAdapt
     RecyclerView photos;
     PhotosAdapter adapter;
     ImageView scrimImage;
+    NestedScrollView nestedScrollView;
     private boolean first= true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_product);
+        Fade transition = new Fade();
+        getWindow().setEnterTransition(transition);
         scrimImage = findViewById(R.id.scrim_image);
+        nestedScrollView = findViewById(R.id.nested_scroll_view);
+        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+
+            }
+        });
         photos = findViewById(R.id.photos_rv);
         photos.setItemAnimator(PopItemAnimator.create());
         adapter = new PhotosAdapter(this);
         photos.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         photos.setAdapter(adapter);
+
+        Spinner spinner = (Spinner) findViewById(R.id.category_spinner);
+// Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.Type, android.R.layout.simple_spinner_item);
+// Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
 
 
     }

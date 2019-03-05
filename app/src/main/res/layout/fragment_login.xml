@@ -4,14 +4,7 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <iammert.com.view.scalinglib.ScalingLayout
-        app:radiusFactor="1"
-        android:background="@color/expand_btn_bg"
-        android:layout_margin="24dp"
-        android:elevation="2dp"       android:layout_width="match_parent"
-        android:layout_height="52dp">
-        <include layout="@layout/expand_button"/>
-    </iammert.com.view.scalinglib.ScalingLayout>
+
 <TextView
     android:gravity="center"
     android:id="@+id/login_title"
