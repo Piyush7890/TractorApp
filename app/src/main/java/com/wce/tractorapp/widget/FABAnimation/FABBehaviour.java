@@ -1,5 +1,6 @@
 package com.wce.tractorapp.widget.FABAnimation;
 
+import android.util.Log;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.animation.Animation;
@@ -26,8 +27,9 @@ public class FABBehaviour implements NestedScrollView.OnScrollChangeListener {
     public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
         int currentWidth = target.getWidth();
 
-        if(scrollY-oldScrollY<0)
+        if((scrollY-oldScrollY)>0)
         {
+            Log.d("CHANGE", "onScrollChange: POSITIVE");
             if(collapseAnimation!=null) {
 
                 collapseAnimation.cancel();
@@ -45,7 +47,9 @@ public class FABBehaviour implements NestedScrollView.OnScrollChangeListener {
             target.startAnimation(expandAnimation);
         }
 
-        else if(scrollY-oldScrollY>0) {
+        else if((scrollY-oldScrollY)<0) {
+            Log.d("CHANGE", "onScrollChange: NEGATIVE");
+
             if(expandAnimation!=null) {
                 expandAnimation.cancel();
                 expandAnimation = null;
