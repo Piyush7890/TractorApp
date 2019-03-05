@@ -1,5 +1,6 @@
 package com.wce.tractorapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -12,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.wce.tractorapp.main.MainActivity;
 import com.wce.tractorapp.model.SignUpData;
 
 import androidx.annotation.NonNull;
@@ -27,6 +29,8 @@ public class LoginActivity extends AppCompatActivity  implements LoginFragment.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        mAuth = FirebaseAuth.getInstance();
+
         parent = findViewById(R.id.parent);
         getSupportFragmentManager().beginTransaction().replace(R.id.parent, new LoginFragment()).commit();
     }
@@ -35,11 +39,44 @@ public class LoginActivity extends AppCompatActivity  implements LoginFragment.O
     public void onFragmentInteraction(int id) {
         switch (id)
         {
-            case R.id.create_account_btn :
-            {
-                getSupportFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).replace(R.id.parent, new SignUpFragment()).addToBackStack("loginfragment").commit() ;
+            case R.id.create_account_btn : {
+                getSupportFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).replace(R.id.parent, new SignUpFragment()).addToBackStack("loginfragment").commit();
             }
 
+        }
+    }
+
+    @Override
+    public void onLoginClick(String email, String password) {
+        if( email==null || email.isEmpty()){
+            Toast.makeText(LoginActivity.this,"Email cannot be empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else if(password==null || password.isEmpty()){
+            Toast.makeText(LoginActivity.this,"Password cannot be empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else {
+            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        if (user.isEmailVerified()) {
+                            Toast.makeText(LoginActivity.this, "Logged In", Toast.LENGTH_SHORT).show();
+                            finish();
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Please verify Your email first", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Invalid Credentials!", Toast.LENGTH_SHORT).show();
+
+                        //finish();
+                        //startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+                    }
+                }
+            });
         }
     }
 
@@ -47,7 +84,7 @@ public class LoginActivity extends AppCompatActivity  implements LoginFragment.O
     @Override
     public void onBackPressed() {
         if(getSupportFragmentManager().getBackStackEntryCount()==0)
-        super.onBackPressed();
+            super.onBackPressed();
         else getSupportFragmentManager().popBackStack();
     }
 
@@ -60,6 +97,7 @@ public class LoginActivity extends AppCompatActivity  implements LoginFragment.O
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
+                    sendEmailVerification();
                     Toast.makeText(LoginActivity.this,"Registered Successfully",Toast.LENGTH_SHORT).show();
                     databaseReference = FirebaseDatabase.getInstance().getReference();
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -67,7 +105,31 @@ public class LoginActivity extends AppCompatActivity  implements LoginFragment.O
                         databaseReference.child("UserInfo").child(user.getUid()).setValue(signUpData);
                     }
                 }
+                else{
+                    Toast.makeText(LoginActivity.this,task.getException().toString(),Toast.LENGTH_SHORT).show();
+
+
+                }
             }
         });
     }
+    private void sendEmailVerification(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user!=null){
+            user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(Task<Void> task) {
+                    if(task.isSuccessful()){
+                        Toast.makeText(LoginActivity.this,"Verify your email-id",Toast.LENGTH_SHORT).show();
+                        FirebaseAuth.getInstance().signOut();
+                    }
+                    Toast.makeText(LoginActivity.this,"Verify error",Toast.LENGTH_SHORT).show();
+
+                }
+            });
+        }
+    }
+
+
+
 }

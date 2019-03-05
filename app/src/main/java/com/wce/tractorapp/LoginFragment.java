@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 
 import androidx.fragment.app.Fragment;
 
@@ -24,7 +25,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private TextInputEditText email,password;
     MaterialButton mLogin, mCreateAccount;
 
     // TODO: Rename and change types of parameters
@@ -70,6 +71,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         mLogin = view.findViewById(R.id.login_btn);
+        email = view.findViewById(R.id.username_et);
+        password = view.findViewById(R.id.password_et);
         mLogin.setOnClickListener(this
         );
         mCreateAccount = view.findViewById(R.id.create_account_btn);
@@ -103,10 +106,13 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-
+        if(v.getId()== R.id.login_btn)mListener.onLoginClick(email.getText().toString(),password.getText().toString());
         mListener.onFragmentInteraction(v.getId());
     }
-
+    public void clearDetails(){
+        email.setText("");
+        password.setText("");
+    }
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -120,5 +126,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(int id);
+        void onLoginClick(String email, String password);
     }
 }
