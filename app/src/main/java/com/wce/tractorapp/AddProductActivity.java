@@ -11,6 +11,7 @@ import android.widget.Spinner;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.wce.tractorapp.ItemAnimators.PopItemAnimator;
+import com.wce.tractorapp.widget.FABAnimation.FABBehaviour;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,12 +36,7 @@ public class AddProductActivity extends AppCompatActivity implements PhotosAdapt
         getWindow().setEnterTransition(transition);
         scrimImage = findViewById(R.id.scrim_image);
         nestedScrollView = findViewById(R.id.nested_scroll_view);
-        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-
-            }
-        });
+        nestedScrollView.setOnScrollChangeListener(new FABBehaviour(findViewById(R.id.fab)));
         photos = findViewById(R.id.photos_rv);
         photos.setItemAnimator(PopItemAnimator.create());
         adapter = new PhotosAdapter(this);
