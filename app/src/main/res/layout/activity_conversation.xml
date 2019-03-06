@@ -31,17 +31,11 @@
 
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
-    <LinearLayout
-        android:paddingTop="16dp"
-        android:clipToPadding="false"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:orientation="vertical"
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <include layout="@layout/left_chat_bubble"/>
-    <include layout="@layout/right_chat_bubble"/>
-        <include layout="@layout/left_chat_bubble"/>
-    </LinearLayout>
+        android:layout_height="match_parent"
+        android:id="@+id/chats"
+        />
     <LinearLayout
         android:layout_gravity="bottom"
         android:padding="8dp"

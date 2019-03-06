@@ -131,8 +131,8 @@ public class DetailsActivity extends AppCompatActivity {
                      @Override
                      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                          SignUpData signUpData = dataSnapshot.getValue(SignUpData.class);
-                         ChatPerson person = new ChatPerson(renterData.getName(),renterData.getEmail(),renterData.getAvatarUrl(), renterData.getUid());
-                         ChatPerson person2 = new ChatPerson(signUpData.getName(),signUpData.getEmail(),signUpData.getAvatarUrl());
+                         ChatPerson person = new ChatPerson(renterData.getName(),renterData.getEmail(),renterData.getAvatarUrl(), renterData.getUid(), signUpData.getAvatarUrl());
+                         ChatPerson person2 = new ChatPerson(signUpData.getName(),signUpData.getEmail(),signUpData.getAvatarUrl(), user.getUid(), renterData.getAvatarUrl());
 
                          reference.child("ChatList").child(user.getUid()).push().setValue(person);
                          reference.child("ChatList").child(renterData.getUid()).push().setValue(person2);

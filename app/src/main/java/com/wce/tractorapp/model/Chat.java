@@ -2,8 +2,10 @@ package com.wce.tractorapp.model;
 
 public class Chat {
     String senderUid;
+    String senderAvatarUrl;
+    String reciverAvatarUrl;
     String receiverUid;
-    long time;
+    String time;
 
     public String getSenderUid() {
         return senderUid;
@@ -21,11 +23,11 @@ public class Chat {
         this.receiverUid = receiverUid;
     }
 
-    public long getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(long time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
@@ -37,12 +39,30 @@ public class Chat {
         this.text = text;
     }
 
+    public String getSenderAvatarUrl() {
+        return senderAvatarUrl;
+    }
+
+    public void setSenderAvatarUrl(String senderAvatarUrl) {
+        this.senderAvatarUrl = senderAvatarUrl;
+    }
+
+    public String getReciverAvatarUrl() {
+        return reciverAvatarUrl;
+    }
+
+    public void setReciverAvatarUrl(String reciverAvatarUrl) {
+        this.reciverAvatarUrl = reciverAvatarUrl;
+    }
+
     String text;
 
-    public Chat(String senderUid, String receiverUid, long time, String text) {
+    public Chat(String senderUid, String receiverUid, String time, String text, String reciverAvatarUrl, String senderAvatarUrl) {
         this.senderUid = senderUid;
         this.receiverUid = receiverUid;
         this.time = time;
         this.text = text;
+        this.reciverAvatarUrl = reciverAvatarUrl;
+        this.senderAvatarUrl = senderAvatarUrl;
     }
 }
