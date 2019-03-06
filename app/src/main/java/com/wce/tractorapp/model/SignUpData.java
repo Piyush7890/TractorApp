@@ -10,6 +10,7 @@ public class SignUpData {
     private String state;
     private String aadharUrl;
     private String address;
+    private String avatarUrl;
 
     public SignUpData() {
     }
@@ -96,5 +97,13 @@ public class SignUpData {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 }

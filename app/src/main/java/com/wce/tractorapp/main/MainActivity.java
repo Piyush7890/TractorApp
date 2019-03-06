@@ -1,10 +1,12 @@
 package com.wce.tractorapp.main;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.wce.tractorapp.R;
 import com.wce.tractorapp.main.controller.BottomNavController;
+import com.wce.tractorapp.widget.Utils;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Utils.setLightStatusBar(this, Color.WHITE);
         BottomNavController.replaceFragment(this, new ExploreFragment());
          new BottomNavController(((BottomNavigationView) findViewById(R.id.bottom_nav_bar)), this);
     }

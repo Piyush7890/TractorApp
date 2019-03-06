@@ -1,63 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginStart="8dp"
-    android:layout_marginTop="4dp"
+    android:layout_marginTop="8dp"
     android:layout_marginEnd="8dp"
-    android:layout_marginBottom="4dp"
-    android:background="@drawable/item_bg"
+    android:layout_marginBottom="8dp"
+    android:background="@drawable/item_bg_ripple"
     android:padding="16dp">
 
-    <ImageView
+    <com.wce.tractorapp.widget.RoundedImageView
         android:id="@+id/image"
-        android:layout_width="72dp"
-        android:layout_height="72dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:scaleType="centerCrop"
+        android:layout_width="112dp"
+        android:layout_height="112dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"/>
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="ifehiofeoij"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/image"
-        app:layout_constraintTop_toTopOf="@id/image" />
-    <TextView
-        android:id="@+id/location"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:drawableStart="@drawable/ic_location_on_black_24dp"
-        android:gravity="center_vertical"
-        android:text="oihfwo"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-        app:layout_constraintStart_toStartOf="@id/title"
-        app:layout_constraintTop_toBottomOf="@id/title" />
+   <LinearLayout
+       android:paddingEnd="16dp"
+       android:paddingStart="16dp"
+       android:orientation="vertical"
+       android:layout_alignParentEnd="true"
+      android:layout_toEndOf="@id/image"
+       android:layout_width="match_parent"
+       android:layout_alignTop="@id/image"
+       android:layout_alignBottom="@id/image"
+       android:layout_height="wrap_content">
+       <TextView
+           android:ellipsize="end"
+           android:gravity="center|start"
+           android:fontFamily="@font/google_sans"
+           android:id="@+id/title"
+           android:layout_width="match_parent"
+           tools:text="4 year tractor"
+           android:layout_height="0dp"
+           android:layout_weight="1"
+           android:text="ifehiofeoij"
+           android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+           android:textSize="18sp"
+           android:layout_toEndOf="@id/image"/>
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="0dp"
-        android:gravity="start"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@+id/price"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/image"
-        app:layout_constraintStart_toStartOf="@id/title"
-        app:layout_constraintTop_toBottomOf="@id/location" />
 
-    <TextView
-        android:id="@+id/price"
-        android:layout_width="0dp"
-        android:gravity="end"
-        android:layout_height="wrap_content"
-        android:text="R 500/month"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@id/location" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+       <TextView
+           android:layout_marginTop="4dp"
+           android:text="Agriculture"
+           android:layout_below="@id/title"
+           android:layout_alignStart="@id/title"
+           android:id="@+id/type"
+           android:layout_width="wrap_content"
+           android:gravity="center"
+           android:layout_height="0dp"
+           android:layout_weight="1"
+           />
+       <TextView
+
+           android:textColor="?android:textColorSecondary"
+           android:drawableTint="#55000000"
+           android:drawablePadding="8dp"
+           android:id="@+id/location"
+           android:layout_width="wrap_content"
+           android:layout_height="0dp"
+           android:layout_weight="1"
+           android:layout_marginTop="4dp"
+           android:layout_alignStart="@id/title"
+           android:drawableStart="@drawable/ic_location_on_black_small"
+           android:gravity="center_vertical"
+           android:text="oihfwo"
+           android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"
+           android:layout_below="@id/type"
+           android:layout_toEndOf="@id/image"/>
+       <TextView
+
+           android:drawableStart="@drawable/rupee_24dp_small"
+           android:id="@+id/price"
+           android:drawableTint="#55000000"
+           android:layout_marginTop="4dp"
+           android:layout_width="wrap_content"
+           android:gravity="center_vertical"
+           android:layout_height="0dp"
+           android:layout_weight="1"
+           android:text="400 per month"
+           android:layout_alignStart="@id/title"
+           android:layout_below="@id/location"
+
+           />
+   </LinearLayout>
+</RelativeLayout>

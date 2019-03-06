@@ -21,6 +21,7 @@ public class BottomNavController implements BottomNavigationView.OnNavigationIte
 
     private  AppCompatActivity activity;
     private BottomNavigationView bottomNavigationView;
+    private int selectedFragment = R.id.action_explore;
 
     public BottomNavController(BottomNavigationView bottomNavigationView, AppCompatActivity activity) {
         this.bottomNavigationView = bottomNavigationView;
@@ -38,10 +39,13 @@ public class BottomNavController implements BottomNavigationView.OnNavigationIte
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        if(selectedFragment==menuItem.getItemId())
+            return false;
         switch (menuItem.getItemId())
         {
             case R.id.action_chats:
             {
+
                 replaceFragment(activity, new ChatsFragment());
                 break;
             }
@@ -61,10 +65,11 @@ public class BottomNavController implements BottomNavigationView.OnNavigationIte
                 break;
             }
         }
+        selectedFragment = menuItem.getItemId();
         return true;
     }
 
-    public final static  void replaceFragment( AppCompatActivity appCompatActivity,  Fragment fragment) {
+    public  static  void replaceFragment( AppCompatActivity appCompatActivity,  Fragment fragment) {
 
         FragmentTransaction fragmentTransaction = appCompatActivity.getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.fragment_slide_up, R.anim.fragment_fade_out);

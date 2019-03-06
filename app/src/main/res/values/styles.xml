@@ -36,7 +36,12 @@
         <item name="android:gravity">center</item>
         <item name="android:layout_gravity">center</item>
     </style>
-    
+
+    <style name="AppTheme.DetailsActivity">
+        <item name="android:windowEnterTransition">@android:transition/fade</item>
+        <item name="android:windowReturnTransition">@transition/details_exit</item>
+    </style>
+
     <style name="BottomNavText" parent="TextAppearance.MaterialComponents.Body2">
         <item name="fontFamily">@font/google_sans</item>
     </style>

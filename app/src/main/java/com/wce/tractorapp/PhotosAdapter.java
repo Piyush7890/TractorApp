@@ -34,6 +34,11 @@ public class PhotosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         notifyItemInserted(photos.size()+1);
     }
 
+    public List<Uri> getPhotos()
+    {
+        return photos;
+    }
+
     @Override
     public int getItemViewType(int position) {
         if(position==photos.size())

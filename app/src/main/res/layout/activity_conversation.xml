@@ -82,6 +82,7 @@
                 android:layout_height="wrap_content" />
         </FrameLayout>
         <ImageButton
+            android:id="@+id/send_btn"
             android:layout_gravity="bottom"
             android:foreground="@drawable/send_btn_ripple"
             android:elevation="2dp"

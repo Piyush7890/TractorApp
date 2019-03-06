@@ -1,11 +1,15 @@
 package com.wce.tractorapp;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
@@ -13,6 +17,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.wce.tractorapp.main.MainActivity;
 import com.wce.tractorapp.model.SignUpData;
 
@@ -24,6 +31,8 @@ public class LoginActivity extends AppCompatActivity  implements LoginFragment.O
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
     ViewGroup parent;
+    StorageReference storageReference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,8 +98,15 @@ public class LoginActivity extends AppCompatActivity  implements LoginFragment.O
     }
 
     @Override
-    public void signUp(final SignUpData signUpData) {
-        FirebaseApp.initializeApp(this);
+    public void signUp(final SignUpData signUpData, final Uri imageUri) {
+        if(imageUri == null) {
+            Toast.makeText(this, "Upload Profile Image first", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        final ProgressDialog dialog = new ProgressDialog(this);
+        dialog.setMessage("Registering User");
+        dialog.show();
+            FirebaseApp.initializeApp(this);
         mAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
         Task<AuthResult> authResultTask = mAuth.createUserWithEmailAndPassword(signUpData.getEmail(), signUpData.getPassword()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -98,16 +114,38 @@ public class LoginActivity extends AppCompatActivity  implements LoginFragment.O
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     sendEmailVerification();
+
                     Toast.makeText(LoginActivity.this,"Registered Successfully",Toast.LENGTH_SHORT).show();
                     databaseReference = FirebaseDatabase.getInstance().getReference();
-                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                    if(user!=null){
-                        databaseReference.child("UserInfo").child(user.getUid()).setValue(signUpData);
-                    }
+                    final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+                    storageReference = firebaseStorage.getReference(user.getUid());
+
+                    final StorageReference reference = storageReference.child(user.getUid()).child(imageUri.getLastPathSegment());
+                    reference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
+                            while (!urlTask.isSuccessful());
+                            Uri downloadUrl = urlTask.getResult();
+                            signUpData.setAvatarUrl(downloadUrl.toString());
+                            if(user!=null){
+                                databaseReference.child("UserInfo").child(user.getUid()).setValue(signUpData);
+                                dialog.dismiss();
+                            }
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            dialog.dismiss();
+                        }
+                    });
+
+
                 }
                 else{
                     Toast.makeText(LoginActivity.this,task.getException().toString(),Toast.LENGTH_SHORT).show();
-
+                    dialog.dismiss();
 
                 }
             }
@@ -123,7 +161,6 @@ public class LoginActivity extends AppCompatActivity  implements LoginFragment.O
                         Toast.makeText(LoginActivity.this,"Verify your email-id",Toast.LENGTH_SHORT).show();
                         FirebaseAuth.getInstance().signOut();
                     }
-                    Toast.makeText(LoginActivity.this,"Verify error",Toast.LENGTH_SHORT).show();
 
                 }
             });
