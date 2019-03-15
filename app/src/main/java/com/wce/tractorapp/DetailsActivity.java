@@ -1,16 +1,22 @@
 package com.wce.tractorapp;
 
+import android.Manifest;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -38,6 +44,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.palette.graphics.Palette;
 
 public class DetailsActivity extends AppCompatActivity {
@@ -49,13 +56,15 @@ public class DetailsActivity extends AppCompatActivity {
     ViewGroup summaryContainer;
     TextView title, location, price, description, type, name;
     ImageView mainImage, avatar;
-    TextView callBtn, chatBtn;
+    FrameLayout callBtn, chatBtn;
     private RenterData renterData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
+        //getWindow().setEnterTransition(new Fade());
+        //getWindow().setReturnTransition(TransitionInflater.from(this).inflateTransition(R.transition.details_exit));
         summaryContainer = findViewById(R.id.summary_container);
         appBarLayout = findViewById(R.id.appbar);
         detailsContainer = findViewById(R.id.details_container);
@@ -71,8 +80,8 @@ public class DetailsActivity extends AppCompatActivity {
         collapsingToolbarLayout = findViewById(R.id.collapsing_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        if(getIntent()!=null) {
-             renterData = Parcels.unwrap(getIntent().getExtras().getParcelable("Product"));
+        if (getIntent() != null) {
+            renterData = Parcels.unwrap(getIntent().getExtras().getParcelable("Product"));
             title.setText(renterData.getTitle());
             location.setText(renterData.getCity());
             price.setText(String.format("%s per month", String.valueOf(renterData.getRent())));
@@ -80,40 +89,47 @@ public class DetailsActivity extends AppCompatActivity {
             type.setText(renterData.getEquipmentType());
             name.setText(renterData.getName());
             Glide.with(this).load(renterData.getAvatarUrl()).into(avatar);
-            if(renterData.getUrls()!=null)
-            Glide.with(this).asBitmap().load(renterData.getUrls().get(0)).transition(new BitmapTransitionOptions().crossFade()).addListener(new RequestListener<Bitmap>() {
-                @Override
-                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
-                    return false;
-                }
+            if (renterData.getUrls() != null)
+                Glide.with(this).asBitmap().load(renterData.getUrls().get(0)).transition(new BitmapTransitionOptions().crossFade()).addListener(new RequestListener<Bitmap>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+                        return false;
+                    }
 
-                @Override
-                public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                    Palette.from(resource).generate(new Palette.PaletteAsyncListener() {
-                        public void onGenerated(Palette p) {
-                            int darkColor = p.getDarkMutedColor(Color.parseColor("#585858"));
-                            summaryContainer.setBackgroundColor(darkColor);
-                            int color = p.getMutedColor(Color.parseColor("#808890"));
-                            ValueAnimator animator = ObjectAnimator.ofArgb(Color.WHITE,darkColor );
-                            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                                @Override
-                                public void onAnimationUpdate(ValueAnimator animation) {
-                                    summaryContainer.setBackgroundColor(((int) animation.getAnimatedValue()));
-                                }
-                            });
-                            animator.setDuration(350L);
-                            animator.start();
-                            getWindow().setStatusBarColor(color);
-                            collapsingToolbarLayout.setContentScrimColor(color);
-                        }
-                    });                    return false;
-                }
-            }).into(mainImage);
+                    @Override
+                    public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                        Palette.from(resource).generate(new Palette.PaletteAsyncListener() {
+                            public void onGenerated(Palette p) {
+                                int darkColor = p.getDarkMutedColor(Color.parseColor("#585858"));
+                                summaryContainer.setBackgroundColor(darkColor);
+                                int color = p.getMutedColor(Color.parseColor("#808890"));
+                                ValueAnimator animator = ObjectAnimator.ofArgb(Color.WHITE, darkColor);
+                                animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                                    @Override
+                                    public void onAnimationUpdate(ValueAnimator animation) {
+                                        summaryContainer.setBackgroundColor(((int) animation.getAnimatedValue()));
+                                    }
+                                });
+                                animator.setDuration(350L);
+                                animator.start();
+                                getWindow().setStatusBarColor(color);
+                                collapsingToolbarLayout.setContentScrimColor(color);
+                            }
+                        });
+                        return false;
+                    }
+                }).into(mainImage);
         }
 
         callBtn = findViewById(R.id.call_btn);
         chatBtn = findViewById(R.id.chat_btn);
+        callBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                onCallBtnClick();
+            }
+        });
         chatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,15 +146,30 @@ public class DetailsActivity extends AppCompatActivity {
                  reference.child("UserInfo").child(user.getUid()).addValueEventListener(new ValueEventListener() {
                      @Override
                      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                         SignUpData signUpData = dataSnapshot.getValue(SignUpData.class);
-                         ChatPerson person = new ChatPerson(renterData.getName(),renterData.getEmail(),renterData.getAvatarUrl(), renterData.getUid(), signUpData.getAvatarUrl());
-                         ChatPerson person2 = new ChatPerson(signUpData.getName(),signUpData.getEmail(),signUpData.getAvatarUrl(), user.getUid(), renterData.getAvatarUrl());
+                         final SignUpData signUpData = dataSnapshot.getValue(SignUpData.class);
 
-                         reference.child("ChatList").child(user.getUid()).push().setValue(person);
-                         reference.child("ChatList").child(renterData.getUid()).push().setValue(person2);
-                         Intent intent = new Intent(DetailsActivity.this, ConversationActivity.class);
-                         intent.putExtra("ChatDetail", Parcels.wrap(person));
-                         startActivity(intent);
+                         reference.child("ChatList").child(user.getUid()).orderByChild("email").equalTo(renterData.getEmail()).addValueEventListener(new ValueEventListener() {
+                             @Override
+                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                 ChatPerson person = new ChatPerson(renterData.getName(),renterData.getEmail(),renterData.getAvatarUrl(), renterData.getUid(), signUpData.getAvatarUrl());
+                                 ChatPerson person2 = new ChatPerson(signUpData.getName(),signUpData.getEmail(),signUpData.getAvatarUrl(), user.getUid(), renterData.getAvatarUrl());
+                                 if(!dataSnapshot.exists())
+                                 {
+                                     reference.child("ChatList").child(user.getUid()).push().setValue(person);
+                                     reference.child("ChatList").child(renterData.getUid()).push().setValue(person2);
+                                 }
+                                 Intent intent = new Intent(DetailsActivity.this, ConversationActivity.class);
+                                 intent.putExtra("ChatDetail", Parcels.wrap(person));
+                                 startActivity(intent);
+                             }
+
+                             @Override
+                             public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                             }
+                         });
+
+
 
                      }
 
@@ -156,5 +187,47 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
 
+
+
+
+
+    private void onCallBtnClick(){
+        if (Build.VERSION.SDK_INT < 23) {
+            phoneCall();
+        }else {
+
+            if (ActivityCompat.checkSelfPermission(this,
+                    Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+
+                phoneCall();
+            }else {
+                final String[] PERMISSIONS_STORAGE = {Manifest.permission.CALL_PHONE};
+                //Asking request Permissions
+                ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE, 9);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        boolean permissionGranted = false;
+        switch(requestCode){
+            case 9:
+                permissionGranted = grantResults[0]== PackageManager.PERMISSION_GRANTED;
+                break;
+        }
+        if(permissionGranted){
+            phoneCall();
+        }else {
+            Toast.makeText(this, "You don't assign permission.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    void phoneCall()
+    {
+        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + renterData.getContact()));
+        startActivity(intent);
+    }
 
 }

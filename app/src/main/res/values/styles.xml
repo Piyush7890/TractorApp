@@ -3,9 +3,24 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
 <item name="android:statusBarColor">#ff808890</item>
+        <item name="android:windowAllowEnterTransitionOverlap">true</item>
+        <item name="android:windowAllowReturnTransitionOverlap">true</item>
           <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:popupMenuStyle">@style/PopUpMenu</item>
+    </style>
+
+    <style name="AppTheme.SearchActivity">
+        <item name="android:windowEnterTransition">@android:transition/fade</item>
+        <item name="android:windowReturnTransition">@android:transition/fade</item>
+    </style>
+
+
+
+    <style name="PopUpMenu" parent="Widget.AppCompat.PopupMenu">
+        <item name="android:popupBackground">@drawable/popup_background</item>
+        <item name="android:popupElevation">2dp</item>
     </style>
 
     <style name="AddProductActivity" parent="AppTheme">
@@ -28,6 +43,44 @@
         <item name="android:background">?selectableItemBackground</item>
     </style>
 
+    <style name="SmallActionButton" parent="@style/Widget.AppCompat.Light.ActionButton">
+        <item name="android:paddingLeft">0.0dip</item>
+        <item name="android:paddingRight">0.0dip</item>
+        <item name="android:minWidth">0.0dip</item>
+
+    </style>
+
+    <style name="ToolbarNavigationButtonStyle" parent="@style/Widget.AppCompat.Toolbar.Button.Navigation">
+        <item name="android:paddingLeft">0.0dp</item>
+        <item name="android:paddingRight">0.0dp</item>
+        <item name="android:minWidth">56dp</item>
+    </style>
+
+    <style name="SortOption">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:foreground">?selectableItemBackground</item>
+        <item name="android:textColor">#212121</item>
+        <item name="android:paddingStart">32dp</item>
+        <item name="android:paddingEnd">32dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">14dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/bottom_sheet_slide_in</item>
+        <item name="android:windowExitAnimation">@anim/bottom_sheet_slide_out</item>
+    </style>
+
+    <style name="FloatingToolbar" parent="@style/Widget.AppCompat.Toolbar">
+        <item name="android:actionButtonStyle">@style/SmallActionButton</item>
+        <item name="contentInsetStartWithNavigation">56dp</item>
+        <item name="actionButtonStyle">@style/SmallActionButton</item>
+        <item name="toolbarNavigationButtonStyle">@style/ToolbarNavigationButtonStyle</item>
+
+    </style>
+
     <style name="ExpandButton">
         <item name="android:fontFamily">@font/google_sans</item>
         <item name="android:drawablePadding">8dp</item>
@@ -37,7 +90,7 @@
         <item name="android:layout_gravity">center</item>
     </style>
 
-    <style name="AppTheme.DetailsActivity">
+    <style name="DetailsActivity" parent="AppTheme">
         <item name="android:windowEnterTransition">@android:transition/fade</item>
         <item name="android:windowReturnTransition">@transition/details_exit</item>
     </style>
@@ -62,5 +115,9 @@
         <item name="android:textSize">15sp</item>
         <item name="android:letterSpacing">0.0075</item>
         <item name="android:lineSpacingMultiplier">1.1</item>
+    </style>
+
+    <style name="ToolbarTitle" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:fontFamily">@font/google_sans</item>
     </style>
 </resources>

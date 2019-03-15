@@ -21,10 +21,13 @@ public class BottomNavController implements BottomNavigationView.OnNavigationIte
 
     private  AppCompatActivity activity;
     private BottomNavigationView bottomNavigationView;
+    Fragment currentFragment;
+    private Listener listener;
     private int selectedFragment = R.id.action_explore;
 
-    public BottomNavController(BottomNavigationView bottomNavigationView, AppCompatActivity activity) {
+    public BottomNavController(BottomNavigationView bottomNavigationView, AppCompatActivity activity,Listener listener ) {
         this.bottomNavigationView = bottomNavigationView;
+        this.listener = listener;
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         this.activity  = activity;
         activity.getLifecycle().addObserver(this);
@@ -45,27 +48,31 @@ public class BottomNavController implements BottomNavigationView.OnNavigationIte
         {
             case R.id.action_chats:
             {
-
-                replaceFragment(activity, new ChatsFragment());
+                currentFragment = new ChatsFragment();
+                replaceFragment(activity, currentFragment);
                 break;
             }
             case R.id.action_explore:
             {
-                replaceFragment(activity, new ExploreFragment());
+                currentFragment = new ExploreFragment();
+                replaceFragment(activity, currentFragment);
                 break;
             }
             case R.id.action_my_ads:
             {
-                replaceFragment(activity, new MyAdsFragment());
+                currentFragment = new MyAdsFragment();
+                replaceFragment(activity, currentFragment);
                 break;
             }
             case R.id.action_profile:
             {
-                replaceFragment(activity, new ProfileFragment());
+                currentFragment = new ProfileFragment();
+                replaceFragment(activity, currentFragment);
                 break;
             }
         }
         selectedFragment = menuItem.getItemId();
+        listener.onFragmentClicked(selectedFragment, currentFragment);
         return true;
     }
 
@@ -76,6 +83,11 @@ public class BottomNavController implements BottomNavigationView.OnNavigationIte
         fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         fragmentTransaction.commit();
+    }
+
+    public interface Listener
+    {
+        void onFragmentClicked(int id, Fragment currentFragment);
     }
 
 }

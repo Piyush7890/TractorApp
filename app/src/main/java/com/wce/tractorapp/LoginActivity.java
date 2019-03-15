@@ -11,6 +11,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -50,6 +51,13 @@ public class LoginActivity extends AppCompatActivity  implements LoginFragment.O
         {
             case R.id.create_account_btn : {
                 getSupportFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).replace(R.id.parent, new SignUpFragment()).addToBackStack("loginfragment").commit();
+                break;
+            }
+
+            case R.id.back_btn:
+            {
+                onBackPressed();
+                break;
             }
 
         }
@@ -58,11 +66,12 @@ public class LoginActivity extends AppCompatActivity  implements LoginFragment.O
     @Override
     public void onLoginClick(String email, String password) {
         if( email==null || email.isEmpty()){
-            Toast.makeText(LoginActivity.this,"Email cannot be empty", Toast.LENGTH_SHORT).show();
+            Snackbar.make(getWindow().getDecorView(), "Email cannot be empty", Snackbar.LENGTH_LONG).show();
+
             return;
         }
         else if(password==null || password.isEmpty()){
-            Toast.makeText(LoginActivity.this,"Password cannot be empty", Toast.LENGTH_SHORT).show();
+            Snackbar.make(getWindow().getDecorView(), "Password cannot be empty", Snackbar.LENGTH_LONG).show();
             return;
         }
         else {
@@ -72,14 +81,16 @@ public class LoginActivity extends AppCompatActivity  implements LoginFragment.O
                     if (task.isSuccessful()) {
                         FirebaseUser user = mAuth.getCurrentUser();
                         if (user.isEmailVerified()) {
-                            Toast.makeText(LoginActivity.this, "Logged In", Toast.LENGTH_SHORT).show();
+                            Snackbar.make(getWindow().getDecorView(), "Logged in successfully", Snackbar.LENGTH_LONG).show();
+
                             finish();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         } else {
-                            Toast.makeText(LoginActivity.this, "Please verify Your email first", Toast.LENGTH_SHORT).show();
+                            Snackbar.make(getWindow().getDecorView(), "Please verify Your email first", Snackbar.LENGTH_LONG).show();
+
                         }
                     } else {
-                        Toast.makeText(LoginActivity.this, "Invalid Credentials!", Toast.LENGTH_SHORT).show();
+                        Snackbar.make(getWindow().getDecorView(), "Invalid Credentials", Snackbar.LENGTH_LONG).show();
 
                         //finish();
                         //startActivity(new Intent(getApplicationContext(),LoginActivity.class));
@@ -100,7 +111,7 @@ public class LoginActivity extends AppCompatActivity  implements LoginFragment.O
     @Override
     public void signUp(final SignUpData signUpData, final Uri imageUri) {
         if(imageUri == null) {
-            Toast.makeText(this, "Upload Profile Image first", Toast.LENGTH_SHORT).show();
+            Snackbar.make(getWindow().getDecorView(), "Upload Profile Image first", Snackbar.LENGTH_LONG).show();
             return;
         }
         final ProgressDialog dialog = new ProgressDialog(this);
@@ -114,8 +125,7 @@ public class LoginActivity extends AppCompatActivity  implements LoginFragment.O
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     sendEmailVerification();
-
-                    Toast.makeText(LoginActivity.this,"Registered Successfully",Toast.LENGTH_SHORT).show();
+Snackbar.make(getWindow().getDecorView(), "Registered Successfully", Snackbar.LENGTH_LONG).show();
                     databaseReference = FirebaseDatabase.getInstance().getReference();
                     final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
@@ -132,6 +142,7 @@ public class LoginActivity extends AppCompatActivity  implements LoginFragment.O
                             if(user!=null){
                                 databaseReference.child("UserInfo").child(user.getUid()).setValue(signUpData);
                                 dialog.dismiss();
+                                onBackPressed();
                             }
                         }
                     }).addOnFailureListener(new OnFailureListener() {
@@ -158,7 +169,7 @@ public class LoginActivity extends AppCompatActivity  implements LoginFragment.O
                 @Override
                 public void onComplete(Task<Void> task) {
                     if(task.isSuccessful()){
-                        Toast.makeText(LoginActivity.this,"Verify your email-id",Toast.LENGTH_SHORT).show();
+                        Snackbar.make(getWindow().getDecorView(), "Verify your email-id", Snackbar.LENGTH_LONG).show();
                         FirebaseAuth.getInstance().signOut();
                     }
 

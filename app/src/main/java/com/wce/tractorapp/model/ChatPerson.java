@@ -7,8 +7,8 @@ public class ChatPerson {
     String name;
     String email;
     String avatarUrl;
-    private String uid;
-    private String hisAvatarUrl;
+     String uid;
+     String hisAvatarUrl;
 
     public String getUid() {
         return uid;

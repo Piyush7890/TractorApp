@@ -7,6 +7,11 @@ public class Chat {
     String receiverUid;
     String time;
 
+    public Chat()
+    {
+        
+    }
+
     public String getSenderUid() {
         return senderUid;
     }

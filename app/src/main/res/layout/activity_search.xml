@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    android:background="@android:color/white"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SearchActivity">
+    <FrameLayout
+        android:id="@+id/container"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:paddingTop="88dp"
+            android:clipToPadding="false"
+            android:layout_height="match_parent"
+            android:id="@+id/search_results"
+            />
+        <ProgressBar android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/loading_view"
+            android:visibility="gone"
+            />
+    </FrameLayout>
+    <com.google.android.material.appbar.AppBarLayout
+       android:id="@+id/appbar"
+        android:background="@null"
+        android:layout_width="match_parent"
+        android:stateListAnimator="@null"
+        android:layout_height="wrap_content"
+        >
+        <FrameLayout
+            android:background="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+    <com.google.android.material.card.MaterialCardView
+
+        android:layout_width="match_parent"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="0dp"
+        app:strokeColor="#dadce0"
+        app:strokeWidth="1dp"
+        android:layout_height="48dp">
+        <LinearLayout
+            android:background="@android:color/transparent"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:background="?selectableItemBackgroundBorderless"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_arrow_back_black_24dp"
+                android:layout_marginStart="16dp"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/back_btn"
+                />
+            <EditText
+                android:fontFamily="@font/google_sans"
+                android:layout_marginStart="24dp"
+                android:background="@android:color/transparent"
+                android:layout_weight="1"
+                android:id="@+id/search_et"
+                android:hint="Search here"
+                android:gravity="center_vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:onClick="getSpeechInput"
+                android:id="@+id/mic_btn"
+                android:background="?selectableItemBackgroundBorderless"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_mic_black_24dp"
+                android:layout_marginEnd="16dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+        </FrameLayout>
+    <View
+        android:id="@+id/shadow"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@drawable/search_shadow"/>
+    </com.google.android.material.appbar.AppBarLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -5,12 +5,16 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -40,19 +44,52 @@ public class ConversationActivity extends ToolBarActivity {
     EditText mCompose;
     RecyclerView chats;
     ImageButton sendBtn;
+    ImageView avatar;
+    TextView title;
+
     ChatPerson detail;
     private ChatAdapter mFirebaseAdapter;
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+                onBackPressed();
+                return  true;
+
+        }
+        return false;
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         mCompose = findViewById(R.id.compose_edit_text);
         sendBtn = findViewById(R.id.send_btn);
+        avatar = findViewById(R.id.avatar);
         chats = findViewById(R.id.chats);
+        chats.setVisibility(View.GONE);
 
+        title = findViewById(R.id.name);
         if(getIntent()!=null)
         {
             detail = Parcels.unwrap(getIntent().getParcelableExtra("ChatDetail"));
+            title.setText(detail.getName());
+            if(detail.getAvatarUrl()!=null)
+            Glide.with(this).load(detail.getAvatarUrl()).transition(new DrawableTransitionOptions().crossFade()).into(avatar);
         }
         mCompose.addTextChangedListener(new TextWatcher() {
             @Override
@@ -81,7 +118,6 @@ public class ConversationActivity extends ToolBarActivity {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         DatabaseReference mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
-        Log.d("AFTER REFERENCE", "onCreateView: ");
 
         final DatabaseReference messagesRef = mFirebaseDatabaseReference.child("ChatRooms");
         messagesRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -92,7 +128,7 @@ public class ConversationActivity extends ToolBarActivity {
                 DatabaseReference reference;
                 if(dataSnapshot.hasChild(room_type_1))
                 {
-                reference =     messagesRef.child(room_type_1);
+                    reference =     messagesRef.child(room_type_1);
                 }
                 else if(dataSnapshot.hasChild(room_type_2))
                 {
@@ -108,8 +144,26 @@ public class ConversationActivity extends ToolBarActivity {
                                 .build();
 
                 mFirebaseAdapter = new ChatAdapter(options,user.getUid());
-                chats.setLayoutManager(new LinearLayoutManager(ConversationActivity.this));
+                final LinearLayoutManager mLinearLayoutManager  = new LinearLayoutManager(ConversationActivity.this);
+                mLinearLayoutManager.setStackFromEnd(true);
+                chats.setLayoutManager(mLinearLayoutManager);
+
                 chats.setAdapter(mFirebaseAdapter);
+                mFirebaseAdapter.startListening();
+                chats.setVisibility(View.VISIBLE);
+                mFirebaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+                    @Override
+                    public void onItemRangeInserted(int positionStart, int itemCount) {
+                        super.onItemRangeInserted(positionStart, itemCount);
+                        chats.setVisibility(View.VISIBLE);
+                        int friendlyMessageCount = mFirebaseAdapter.getItemCount();
+                        int lastVisiblePosition = mLinearLayoutManager.findLastCompletelyVisibleItemPosition();
+                        if (lastVisiblePosition == -1 ||
+                                (positionStart >= (friendlyMessageCount - 1) && lastVisiblePosition == (positionStart - 1))) {
+                            chats.scrollToPosition(positionStart);
+                        }
+                    }
+                });
 
             }
 
@@ -135,6 +189,23 @@ public class ConversationActivity extends ToolBarActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(mFirebaseAdapter!=null)
+            mFirebaseAdapter.startListening();
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if(mFirebaseAdapter!=null)
+            mFirebaseAdapter.stopListening();
+
+    }
+
     private void sendMessageToUser(final Chat chat) {
         final String room_type_1 = chat.getSenderUid() + "_" + chat.getReceiverUid();
         final String room_type_2 = chat.getReceiverUid() + "_" + chat.getSenderUid();
@@ -144,13 +215,17 @@ public class ConversationActivity extends ToolBarActivity {
         databaseReference.child(ARG_CHAT_ROOMS).getRef().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                long millis = System.currentTimeMillis();
+
+
                 if (dataSnapshot.hasChild(room_type_1)) {
-                    databaseReference.child(ARG_CHAT_ROOMS).child(room_type_1).child(String.valueOf(chat.getTime())).setValue(chat);
+                    databaseReference.child(ARG_CHAT_ROOMS).child(room_type_1).child(String.valueOf(millis)).setValue(chat);
                 } else if (dataSnapshot.hasChild(room_type_2)) {
-                    databaseReference.child(ARG_CHAT_ROOMS).child(room_type_2).child(String.valueOf(chat.getTime())).setValue(chat);
+                    databaseReference.child(ARG_CHAT_ROOMS).child(room_type_2).child(String.valueOf(millis)).setValue(chat);
                 } else {
-                    databaseReference.child(ARG_CHAT_ROOMS).child(room_type_1).child(String.valueOf(chat.getTime())).setValue(chat);
+                    databaseReference.child(ARG_CHAT_ROOMS).child(room_type_1).child(String.valueOf(millis)).setValue(chat);
                 }
+                mCompose.setText("");
             }
 
             @Override
@@ -159,7 +234,7 @@ public class ConversationActivity extends ToolBarActivity {
             }
         });
 
-        }
+    }
 
     @Override
     protected boolean isBackEnabled() {

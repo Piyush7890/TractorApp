@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    android:background="@android:color/white"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,27 +8,79 @@
     android:layout_height="match_parent"
     tools:context=".main.MainActivity">
     <FrameLayout
+
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_marginBottom="56dp"
         android:layout_above="@id/bottom_nav_bar"
             android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:background="@null"
+        android:stateListAnimator="@null"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <com.google.android.material.card.MaterialCardView
+        app:layout_scrollFlags="scroll|snap|enterAlways"
+        android:layout_marginBottom="16dp"
+        app:cardCornerRadius="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        app:cardElevation="2dp"
+        app:cardMaxElevation="3.769989dp"
+        app:cardBackgroundColor="@android:color/white"
+        app:strokeWidth="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <androidx.appcompat.widget.Toolbar
+        android:gravity="center_vertical"
+        android:id="@+id/toolbar"
+        app:contentInsetEnd="0dp"
+        app:contentInsetStart="0dp"
+        android:paddingStart="0dp"
+        android:paddingEnd="0dp"
+        app:titleMargin="0dp"
+        android:theme="@style/FloatingToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+        <TextView
+            android:id="@+id/title"
+            android:text="Explore"
+            android:layout_marginStart="16dp"
+            android:textColor="#99000000"
+            android:gravity="center_vertical"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:fontFamily="@font/google_sans"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.card.MaterialCardView>
+    </com.google.android.material.appbar.AppBarLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <View
         android:id="@+id/bottom_nav_shadow"
-        android:layout_above="@id/bottom_nav_bar"
         android:layout_width="match_parent"
         android:layout_height="8dp"
         android:background="@drawable/bottom_bar_shadow"/>
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         app:itemTextAppearanceActive="@style/BottomNavText"
         app:itemTextAppearanceInactive="@style/BottomNavText"
         android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
         android:id="@+id/bottom_nav_bar"
         android:layout_height="wrap_content"
         app:labelVisibilityMode="labeled"
         app:itemHorizontalTranslationEnabled="true"
         app:menu="@menu/bottom_nav_menu"/>
+</LinearLayout>
 
-</RelativeLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

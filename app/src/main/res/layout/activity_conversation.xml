@@ -20,23 +20,41 @@
             android:contentInsetRight="0dp"
             android:contentInsetEnd="0dp"
             app:contentInsetRight="0dp"
+            android:gravity="center_vertical"
             app:contentInsetEnd="0dp"
             android:id="@+id/toolbar"
             android:elevation="4dp"
             android:background="@android:color/white"
             android:layout_width="match_parent"
-            app:title="Piyush"
             android:layout_height="?actionBarSize">
 
+            <com.wce.tractorapp.widget.CircleImageView
+                android:layout_width="36dp"
+                android:id="@+id/avatar"
+                android:layout_height="36dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textColor="#202020"
+                android:id="@+id/name"
+                android:gravity="center_vertical"
+                android:layout_marginStart="8dp"
+                android:layout_height="wrap_content" />
 
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
     <androidx.recyclerview.widget.RecyclerView
+        android:visibility="gone"
+        android:paddingTop="16dp"
+        android:paddingBottom="64dp"
+        android:clipToPadding="false"
         android:layout_width="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_height="match_parent"
         android:id="@+id/chats"
         />
     <LinearLayout
+        android:background="@drawable/bottom_gradient"
         android:layout_gravity="bottom"
         android:padding="8dp"
         android:clipToPadding="false"

@@ -112,6 +112,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.back_btn:
+                getActivity().onBackPressed();
                 break;
             case R.id.signup_btn:
             {

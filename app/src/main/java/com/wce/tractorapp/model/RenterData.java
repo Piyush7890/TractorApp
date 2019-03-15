@@ -13,6 +13,16 @@ public class RenterData {
      String description;
      String title;
 
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+    String contact;
+
     public String getAvatarUrl() {
         return avatarUrl;
     }
@@ -30,6 +40,9 @@ public class RenterData {
     }
 
     String uid;
+
+
+
     String avatarUrl;
      boolean availabilityStatus;
      String date;
@@ -56,7 +69,9 @@ public class RenterData {
                       int rent,
                       List<String> urls,
                       String city,
-                      String avatarUrl, String uid){
+                      String avatarUrl,
+                      String uid,
+                      String contact){
         this.name = name;
         this.email = email;
         this.title = title;
@@ -65,11 +80,11 @@ public class RenterData {
         this.availabilityStatus = availabilityStatus;
         this.date = date;
         this.rent = rent;
-        //this.equipmentUrl = equipmentUrl;
         this.urls = urls;
         this.city = city;
         this.avatarUrl = avatarUrl;
         this.uid = uid;
+        this.contact = contact;
     }
 
 

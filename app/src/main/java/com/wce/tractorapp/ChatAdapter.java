@@ -1,5 +1,6 @@
 package com.wce.tractorapp;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -28,37 +29,39 @@ public class ChatAdapter  extends FirebaseRecyclerAdapter<Chat, RecyclerView.Vie
 
     @Override
     public int getItemViewType(int position) {
+        int type;
         if(position==0)
         {
-            if(getItem(position).getSenderUid()==uid)
+            if(getItem(position).getSenderUid().equals(uid))
             {
-                return RIGHT_TOP;
+                type =  RIGHT_TOP;
             }
             else
             {
-                return LEFT_TOP;
+                type =  LEFT_TOP;
             }
         }
       else {
-          if(getItem(position).getSenderUid()==uid && getItem(position-1).getSenderUid()==uid)
+          if(getItem(position).getSenderUid().equals(uid) && getItem(position - 1).getSenderUid().equals(uid))
           {
-              return RIGHT_MID;
+              type =  RIGHT_MID;
           }
-          else if(getItem(position).getReceiverUid()==uid && getItem(position-1).getReceiverUid()==uid)
+          else if(getItem(position).getReceiverUid().equals(uid) && getItem(position - 1).getReceiverUid().equals(uid))
           {
-              return LEFT_MID;
+              type =  LEFT_MID;
           }
-          else if(getItem(position).getSenderUid()==uid)
+          else if(getItem(position).getSenderUid().equals(uid))
           {
-              return RIGHT_TOP;
+              type =  RIGHT_TOP;
           }
           else
           {
-            return LEFT_TOP;
+            type =  LEFT_TOP;
           }
 
         }
-
+        Log.d("TYPEHOLDER", "getItemViewType: "+type);
+        return type;
    }
 
     @Override

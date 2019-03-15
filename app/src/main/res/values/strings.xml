@@ -11,4 +11,16 @@
         <item>Irrigation Tools</item>
         <item>Harvesting Tools</item>
     </string-array>
+
+    <string-array name="Location">
+        <item>Any</item>
+        <item>Pune</item>
+        <item>Mumbai</item>
+        <item>Amravati</item>
+        <item>Pune</item>
+    </string-array>
+
+
+
+
 </resources>

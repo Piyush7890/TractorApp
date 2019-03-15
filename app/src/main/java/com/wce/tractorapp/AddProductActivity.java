@@ -109,6 +109,7 @@ public class AddProductActivity extends AppCompatActivity implements PhotosAdapt
                         SignUpData signUpData = dataSnapshot.getValue(SignUpData.class);
                         name = signUpData.getName();
                         email = signUpData.getEmail();
+                        String number = signUpData.getContactNo();
                         String city = signUpData.getCity();
                         RenterData renterData = new RenterData(name,
                                 email,
@@ -121,7 +122,8 @@ public class AddProductActivity extends AppCompatActivity implements PhotosAdapt
                                 urls,
                                 city,
                                 signUpData.getAvatarUrl(),
-                                user.getUid());
+                                user.getUid(),
+                                number);
                         databaseReference = FirebaseDatabase.getInstance().getReference();
                         if (user != null) {
                             databaseReference.child("RentInfo").push().setValue(renterData);
@@ -133,7 +135,6 @@ public class AddProductActivity extends AppCompatActivity implements PhotosAdapt
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        Log.d("Chutiya SHivani", "onDataChange: ");
 
                     }
                 };
