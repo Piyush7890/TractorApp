@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:title="Search"
+        android:id="@+id/search" android:icon="@drawable/ic_search_black_24dp" app:showAsAction="always"/>
+<item android:id="@+id/filter" android:icon="@drawable/ic_filter_list_black_24dp" app:showAsAction="always"
+    android:title="Filter" />
+    <item android:title="Log Out" android:id="@+id/log_out" android:icon="@drawable/ic_exit_to_app_black_24dp" app:showAsAction="never"/>
+</menu>
